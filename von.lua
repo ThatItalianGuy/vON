@@ -509,16 +509,16 @@ _serialize = {
 		--	If a number hasn't been written before, add the type prefix.
 		if mustInitiate then
 			if isKey or isLast then
-				return ("$[%i]"):format(data)
+				return ("$%i"):format(data)
 			else
-				return ("$[%i];"):format(data)
+				return ("$%i;"):format(data)
 			end
 		end
 
 		if isKey or isLast then
 			return data
 		else
-			return ("[%i];"):format(data)
+			return ("%i;"):format(data)
 		end
 	end,
 
@@ -529,16 +529,16 @@ _serialize = {
 		--	If a number hasn't been written before, add the type prefix.
 		if mustInitiate then
 			if isKey or isLast then
-				return ("n[%i]"):format(data)
+				return ("n%i"):format(data)
 			else
-				return ("n[%i];"):format(data)
+				return ("n%i;"):format(data)
 			end
 		end
 
 		if isKey or isLast then
 			return data
 		else
-			return ("[%i];"):format(data)
+			return ("%i;"):format(data)
 		end
 	end,
 
@@ -546,10 +546,10 @@ _serialize = {
 --	I hope gsub is fast enough.
 	["string"] = function(data, mustInitiate, isNumeric, isKey, isLast, first, jobstate)
 		if sub(data, #data, #data) == "\\" then	--	Hah, old strings fix this best.
-			return "\"" .. gsub(data, "\"", "\\\"") .. "v\""
+			return ("\"%iv\""):format(gsub(data, "\"", "\\\""))
 		end
 
-		return "'" .. gsub(data, "\"", "\\\"") .. "\""
+		return ("'%i\""):format(gsub(data, "\"", "\\\""))
 	end,
 
 
@@ -681,16 +681,16 @@ _serialize = {
 
 			if mustInitiate then
 				if isKey or isLast then
-					return ("e[%i]"):format(data)
+					return ("e%i"):format(data)
 				else
-					return ("e[%i];"):format(data)
+					return ("e%i;"):format(data)
 				end
 			end
 
 			if isKey or isLast then
 				return data
 			else
-				return ("[%i];"):format(data)
+				return ("%i;"):format(data)
 			end
 		end,
 
@@ -699,16 +699,16 @@ _serialize = {
 		["Vector"] = function(data, mustInitiate, isNumeric, isKey, isLast, first, jobstate)
 			if mustInitiate then
 				if isKey or isLast then
-					return ("v[%i],[%i],[%i]"):format(data.x,data.y,data.z)
+					return ("v%i,%i,%i"):format(data.x,data.y,data.z)
 				else
-					return ("v[%i],[%i],[%i];"):format(data.x,data.y,data.z)
+					return ("v%i,%i,%i;"):format(data.x,data.y,data.z)
 				end
 			end
 
 			if isKey or isLast then
-				return ("[%i],[%i],[%i]"):format(data.x,data.y,data.z)
+				return ("%i,%i,%i"):format(data.x,data.y,data.z)
 			else
-				return ("[%i],[%i],[%i];"):format(data.x,data.y,data.z)
+				return ("%i,%i,%i;"):format(data.x,data.y,data.z)
 			end
 		end,
 
@@ -717,16 +717,16 @@ _serialize = {
 		["Angle"] = function(data, mustInitiate, isNumeric, isKey, isLast, first, jobstate)
 			if mustInitiate then
 				if isKey or isLast then
-					return ("a[%i],[%i],[%i]"):format(data.p,data.y,data.r)
+					return ("a%i,%i,%i"):format(data.p,data.y,data.r)
 				else
-					return ("a[%i],[%i],[%i];"):format(data.p,data.y,data.r)
+					return ("a%i,%i,%i;"):format(data.p,data.y,data.r)
 				end
 			end
 
 			if isKey or isLast then
-				return ("[%i],[%i],[%i]"):format(data.p,data.y,data.r)
+				return ("%i,%i,%i"):format(data.p,data.y,data.r)
 			else
-				return ("[%i],[%i],[%i];"):format(data.p,data.y,data.r)
+				return ("%i,%i,%i;"):format(data.p,data.y,data.r)
 			end
 		end,
 	}
